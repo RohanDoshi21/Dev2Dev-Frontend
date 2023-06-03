@@ -2,7 +2,7 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useHistory, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { authCheck } from "../AuthChecker";
 import arrrowDown from "../assets/down-arrow.png";
 import arrrowUp from "../assets/up-arrow.png";
@@ -288,7 +288,6 @@ const DisplayQuestionAndAnswers = (props) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

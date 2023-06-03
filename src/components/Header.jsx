@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { authCheck, logOut } from "../AuthChecker";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
@@ -63,7 +63,6 @@ const Header = () => {
 
   return (
     <div>
-      <ToastContainer />
       <header className="flex justify-between items-center py-2 px-4 bg-[#0A2647] h-16 text-gray-100">
         {/* Logo */}
         <div className="logo">

@@ -16,7 +16,6 @@ const SearchPage = () => {
       .then((response) => response.json())
       .then((data) => setQuestions(data["data"]["questions"]))
       .catch((error) => console.error(error));
-
   }, [questions]);
 
   function formatedDate(createdAt) {
