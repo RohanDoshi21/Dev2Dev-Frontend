@@ -9,39 +9,23 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
-  // const isAuthenticated = authCheck();
   let [isAuthenticated, setAuth] = useState(authCheck());
   let [query, setQuery] = useState("");
   const history = useHistory();
-  // console.log("Acc status ", isAuthenticated);
-  // const isAuthenticated = authCheck();
-  const userName = localStorage.getItem("username");
-  const userId = localStorage.getItem("userID");
-  const dpUrl = localStorage.getItem("dpUrl");
 
-  console.log("Acc status ", userId);
+  const userName = localStorage.getItem("username");
+  const dpUrl = localStorage.getItem("dpUrl");
 
   const handleLogout = async () => {
     try {
       const data = logOut();
-      console.log(data);
-      // if (data?.error) {
-      //   console.log(data.error);
-      // } else
       setAuth(false);
-      toast.success("Logged out!", {
-        position: "top-center",
-        hideProgressBar: true,
-      });
+      toast.success("Logged out!");
       localStorage.removeItem("userID");
       localStorage.removeItem("username");
       localStorage.removeItem("jwt_authorization");
     } catch (e) {
-      toast.error("Failed to logout", {
-        position: "top-center",
-        hideProgressBar: true,
-      });
-      console.log(e);
+      toast.error("Failed to logout");
     }
   };
 
@@ -56,7 +40,6 @@ const Header = () => {
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 13) {
-      console.log("Enter pressed");
       handleSearch();
     }
   };
@@ -84,9 +67,6 @@ const Header = () => {
               placeholder="Search..."
               value={query}
               onChange={handleChange}
-              onClick={() => {
-                console.log(query);
-              }}
               onKeyDown={handleKeyDown}
             />
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">

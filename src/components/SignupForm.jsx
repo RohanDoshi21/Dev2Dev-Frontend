@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { signupUrl } from "../constants/urls";
-
+import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,8 +11,6 @@ const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  //   const [dpUrl, setDpUrl] = useState("-");
-  //   const [reputation, setReputation] = useState("User");
   const history = useHistory();
 
   const handleSubmit = async (e) => {
@@ -24,31 +22,21 @@ const SignupForm = () => {
       phone_number: phoneNumber,
       password: password,
     };
+
     const options = {
-      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
     };
-    console.log(signupUrl);
+
     try {
-      const response = await fetch(signupUrl, options);
-      const data = await response.json();
-      if (data?.error) {
-      } else {
-        console.log(data);
-        toast.success("Successfully registered!", {
-          position: "top-center",
-          hideProgressBar: true,
-        });
+      const response = await axios.post(signupUrl, data, options);
+
+      if (response.status === 201) {
+        toast.success("Successfully registered!");
+        toast.info("Please login to continue");
+        history.push("/auth/login");
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Failed to register", {
-        position: "top-center",
-        hideProgressBar: true,
-      });
-    } finally {
-      history.push("/auth/login");
+      toast.error(error.response.data.error);
     }
   };
 

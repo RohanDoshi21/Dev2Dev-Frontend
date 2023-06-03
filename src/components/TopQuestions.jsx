@@ -10,7 +10,6 @@ import { getQuestionsUrl } from "../constants/urls";
 import QuestionPageSwitcher from "./QuestionPageSwitcher";
 
 const fetchTopQuestions = async (option, page) => {
-  //   console.log(getQuestionsUrl + `?page=${page}&` + `sort=${option}`);
   let response = await fetch(
     getQuestionsUrl + `?page=${page}&` + `sort=${option}`
   );

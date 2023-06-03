@@ -10,8 +10,6 @@ const SearchPage = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    console.log(searchURL + query);
-
     fetch(searchURL + query)
       .then((response) => response.json())
       .then((data) => setQuestions(data["data"]["questions"]))
@@ -25,8 +23,6 @@ const SearchPage = () => {
     })} ${date.getFullYear()}`;
     return formattedDate;
   }
-
-  console.log("Inside search page", questions);
 
   return (
     <div>

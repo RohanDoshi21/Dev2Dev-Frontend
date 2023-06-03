@@ -18,7 +18,6 @@ const fetchQuestionById = async (id) => {
   let response = await fetch(getQuestionsUrl + "/" + id);
 
   const data = await response.json();
-  console.log(data);
   return data["data"]["question"];
 };
 
@@ -78,8 +77,6 @@ const DisplayQuestionAndAnswers = (props) => {
       },
     };
 
-    console.log(`posting ${id}`);
-
     Axios.post(
       answerUrl,
       {
@@ -88,7 +85,6 @@ const DisplayQuestionAndAnswers = (props) => {
       },
       config
     ).then((response) => {
-      console.log(response);
       setAddAnswerVariable("");
       fetchAnswersByQuestionId(id).then((data) => setAnswers(data));
       toast.success("Answer Added Succesfully");
@@ -120,7 +116,6 @@ const DisplayQuestionAndAnswers = (props) => {
       config
     )
       .then((response) => {
-        console.log(response);
         if (type === "question") {
           fetchQuestionById(id).then((data) => setQuestion(data));
         } else {
@@ -129,7 +124,6 @@ const DisplayQuestionAndAnswers = (props) => {
         toast.success("Vote Added Succesfully");
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error.response.data.error);
       });
   };

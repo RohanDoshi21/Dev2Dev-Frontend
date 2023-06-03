@@ -22,7 +22,6 @@ const LoginForm = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
-    console.log(loginUrl);
     try {
       const response = await fetch(loginUrl, options);
       const responseData = await response.json();
@@ -38,21 +37,15 @@ const LoginForm = () => {
         localStorage.setItem("role", responseData["data"]["user"]["role"]);
         localStorage.setItem("dpUrl", responseData["data"]["user"]["dpUrl"]);
 
-        toast.success("Logged in!", {
-          hideProgressBar: true,
-        });
+        toast.success("Logged in!");
 
         history.push("/");
       } else {
-        console.log(responseData);
-
         const error = responseData["error"]; // Assuming the backend returns an "error" field
         toast.error(error);
       }
     } catch (error) {
-      toast.error(error, {
-        hideProgressBar: true,
-      });
+      toast.error(error);
     }
   };
 
