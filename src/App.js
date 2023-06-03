@@ -36,9 +36,11 @@ function App() {
         <ToastContainer />
         <Switch>
           <Route exact path="/auth/signup">
+            <Header />
             <SignupForm />
           </Route>
           <Route exact path="/auth/login">
+            <Header />
             <LoginForm />
           </Route>
           <Route exact path="/">
@@ -52,7 +54,7 @@ function App() {
             <Header />
             <DisplayQuestionAndAnswers />
           </Route>
-          <Route path="/questions/my_questions/:id">
+          <Route path="/questions/my_questions">
             <Header />
             <MyQuestions />
           </Route>

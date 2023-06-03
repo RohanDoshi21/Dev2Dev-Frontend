@@ -114,7 +114,7 @@ const Header = () => {
               {isAuthenticated && (
                 <Link
                   className="hover:text-blue-500"
-                  to={`/questions/my_questions/${userId}`}
+                  to={`/questions/my_questions`}
                 >
                   My Questions
                 </Link>

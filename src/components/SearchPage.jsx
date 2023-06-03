@@ -5,20 +5,19 @@ import arrrowUp from "../assets/up-arrow.png";
 import { searchURL } from "../constants/urls";
 import Header from "./Header";
 
-const SearchPage = (props) => {
+const SearchPage = () => {
   const { query } = useParams();
   const [questions, setQuestions] = useState([]);
-  // let questions = [];
-  console.log("Query: ", query);
 
   useEffect(() => {
     console.log(searchURL + query);
+
     fetch(searchURL + query)
       .then((response) => response.json())
       .then((data) => setQuestions(data["data"]["questions"]))
       .catch((error) => console.error(error));
-    console.log("In useEffect", questions);
-  }, []);
+
+  }, [questions]);
 
   function formatedDate(createdAt) {
     const date = new Date(createdAt);
