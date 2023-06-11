@@ -6,12 +6,14 @@ import { toast } from "react-toastify";
 import { authCheck } from "../AuthChecker";
 import arrrowDown from "../assets/down-arrow.png";
 import arrrowUp from "../assets/up-arrow.png";
+import { authCheckModerator } from "../AuthChecker";
 import {
   answerUrl,
   deleteMyQuestion,
   getQuestionsUrl,
   voteAnswerUrl,
   voteQuestionUrl,
+  changeStatusUrl,
 } from "../constants/urls";
 
 const fetchQuestionById = async (id) => {
@@ -53,6 +55,8 @@ const DisplayQuestionAndAnswers = (props) => {
     return formattedDate;
   }
 
+  const [isModerator, setIsModerator] = useState(false);
+
   useEffect(() => {
     fetchAnswersByQuestionId(id).then((data) => setAnswers(data));
     fetchQuestionById(id).then((data) => {
@@ -60,6 +64,7 @@ const DisplayQuestionAndAnswers = (props) => {
       updateIsMyQuestion(data["ownerId"] == userID);
       setEmail(data["owner"]["email"]);
     });
+    setIsModerator(authCheckModerator());
   }, []);
 
   const addAnswer = async () => {
@@ -84,11 +89,15 @@ const DisplayQuestionAndAnswers = (props) => {
         question: id,
       },
       config
-    ).then((response) => {
-      setAddAnswerVariable("");
-      fetchAnswersByQuestionId(id).then((data) => setAnswers(data));
-      toast.success("Answer Added Succesfully");
-    });
+    )
+      .then((response) => {
+        setAddAnswerVariable("");
+        fetchAnswersByQuestionId(id).then((data) => setAnswers(data));
+        toast.success("Answer Added Succesfully");
+      })
+      .catch((error) => {
+        toast.error(error.response.data.error);
+      });
   };
 
   const addVote = async (id, vote, type) => {
@@ -138,6 +147,33 @@ const DisplayQuestionAndAnswers = (props) => {
     });
     await res.json();
     history.goBack();
+  };
+
+  const handleStatusChange = async (id, questionStatus) => {
+    const status = localStorage.getItem("jwt_authorization");
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + status,
+      },
+    };
+
+    Axios.patch(
+      changeStatusUrl,
+      {
+        questionId: id,
+        status: questionStatus,
+      },
+      config
+    )
+      .then((response) => {
+        fetchQuestionById(id).then((data) => setQuestion(data));
+        toast.success("Status Changed Successfully");
+      })
+      .catch((error) => {
+        toast.error(error.response.data.error);
+      });
   };
 
   return (
@@ -200,6 +236,26 @@ const DisplayQuestionAndAnswers = (props) => {
             <button onClick={() => handleDelete(question.id)}>
               <FaTrash />
             </button>
+          )}
+
+          {isModerator && (
+            <div className="flex items-center">
+              {question.status === "OPEN" ? (
+                <button
+                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg"
+                  onClick={() => handleStatusChange(question.id, "CLOSED")}
+                >
+                  Close
+                </button>
+              ) : (
+                <button
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg"
+                  onClick={() => handleStatusChange(question.id, "OPEN")}
+                >
+                  Open
+                </button>
+              )}
+            </div>
           )}
         </div>
       </div>

@@ -1,11 +1,14 @@
+import React, { useContext } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { loginUrl } from "../constants/urls";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -38,6 +41,8 @@ const LoginForm = () => {
         localStorage.setItem("dpUrl", responseData["data"]["user"]["dpUrl"]);
 
         toast.success("Logged in!");
+
+        login();
 
         history.push("/");
       } else {

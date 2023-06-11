@@ -14,6 +14,7 @@ import SignupForm from "./components/SignupForm";
 import Tags from "./components/TagsComponent";
 import UserProfile from "./components/UserProfile";
 import UserListPage from "./components/UserListPage";
+import { AuthProvider } from "./components/AuthContext";
 
 function App() {
   //   const [isLogin, setType] = useState(authCheck());
@@ -40,8 +41,10 @@ function App() {
             <SignupForm />
           </Route>
           <Route exact path="/auth/login">
-            <Header />
-            <LoginForm />
+            <AuthProvider>
+              <Header />
+              <LoginForm />
+            </AuthProvider>
           </Route>
           <Route exact path="/">
             <Header />

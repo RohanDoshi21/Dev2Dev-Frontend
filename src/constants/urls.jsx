@@ -12,3 +12,4 @@ export const voteQuestionUrl = baseUrl + "/votes/question/";
 export const voteAnswerUrl = baseUrl + "/votes/answer/";
 export const getTagListUrl = baseUrl + "/tags";
 export const getUserUrl = baseUrl + "/users/";
+export const changeStatusUrl = baseUrl + "/moderation/change_status/";

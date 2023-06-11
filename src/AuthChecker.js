@@ -1,10 +1,23 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import jwtDecode from "jwt-decode";
 
 const authCheck = () => {
   const token = localStorage.getItem("jwt_authorization");
 
   return token !== null;
+};
+
+const authCheckModerator = () => {
+  const token = localStorage.getItem("jwt_authorization");
+
+  const decodedToken = jwtDecode(token);
+  const user = decodedToken.user;
+  const role = user.role;
+
+  console.log(role);
+
+  return role === "MODERATOR";
 };
 
 const logOut = async () => {
@@ -33,4 +46,4 @@ const config = {
   },
 };
 
-export { authCheck, logOut, config };
+export { authCheck, logOut, config, authCheckModerator };
