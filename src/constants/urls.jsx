@@ -13,3 +13,4 @@ export const voteAnswerUrl = baseUrl + "/votes/answer/";
 export const getTagListUrl = baseUrl + "/tags";
 export const getUserUrl = baseUrl + "/users/";
 export const changeStatusUrl = baseUrl + "/moderation/change_status/";
+export const makeModeratorUrl = baseUrl + "/moderation/make_moderator/";

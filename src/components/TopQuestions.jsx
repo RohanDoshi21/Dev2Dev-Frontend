@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import { authCheck } from "../AuthChecker";
-import arrrowDown from "../assets/down-arrow.png";
-import arrrowUp from "../assets/up-arrow.png";
+import arrowDown from "../assets/down-arrow.png";
+import arrowUp from "../assets/up-arrow.png";
 import { getQuestionsUrl } from "../constants/urls";
 import QuestionPageSwitcher from "./QuestionPageSwitcher";
 
@@ -260,7 +260,7 @@ const TopQuestions = () => {
                 aria-label="Upvote"
               >
                 <img
-                  src={arrrowUp}
+                  src={arrowUp}
                   className="h-5 w-5 mx-2"
                   alt="up arrow"
                 ></img>
@@ -272,7 +272,7 @@ const TopQuestions = () => {
                 aria-label="Downvote"
               >
                 <img
-                  src={arrrowDown}
+                  src={arrowDown}
                   className="h-5 w-5 mx-2"
                   alt="up arrow"
                 ></img>
