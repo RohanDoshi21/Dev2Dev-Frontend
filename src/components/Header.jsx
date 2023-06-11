@@ -18,7 +18,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      const data = logOut();
+      logOut();
       setAuth(false);
       toast.success("Logged out!");
       localStorage.removeItem("userID");
@@ -59,10 +59,10 @@ const Header = () => {
         </div>
 
         {/* Search bar */}
-        <div className="flex-1 mx-4">
+        <div className="flex-1 mx-4 items-center">
           <div className="relative">
             <input
-              className="block w-full bg-gray-800 border border-gray-700 rounded-lg py-2 px-4 placeholder-gray-500 text-gray-100 focus:outline-none focus:border-blue-500 focus:shadow-outline-blue"
+              className="block w-full bg-gray-200 border border-gray-300 rounded-lg py-2 px-4 placeholder-gray-500 text-gray-700 focus:outline-none focus:border-blue-500 focus:shadow-outline-blue"
               type="text"
               placeholder="Search..."
               value={query}
