@@ -41,54 +41,62 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="signup-form">
-        <h1>Sign Up</h1>
-        <form onSubmit={handleSubmit} className="auth-form">
-          <label>First Name</label>
+    <div className="flex justify-center my-4 items-center align-middle bg-cover font-myfont">
+      <div className="flex justify-center items-center flex-col rounded-xl gap-y-2 p-8 border-2 shadow-xl mt-5 px-10">
+        <h1 className="text-4xl font-semibold mt-2 text-[#0A2647]">Sign Up</h1>
+        <hr className="w-full border-[#0A2647] border-[0.12rem] mb-4" />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2 text-sm">
+          <label className="text-base">First Name</label>
           <input
             type="text"
-            className="auth-input"
+            className="border py-2 px-3 rounded outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
             value={firstName}
             required
             onChange={(e) => setFname(e.target.value)}
           />
-          <label>Last Name</label>
+          <label className="text-base">Last Name</label>
           <input
             type="text"
-            className="auth-input"
+            className="border py-2 px-3 rounded outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
             value={lastName}
             required
             onChange={(e) => setLname(e.target.value)}
           />
-          <label>Email</label>
+          <label className="text-base">Email</label>
           <input
             type="email"
-            className="auth-input"
+            className="border py-2 px-3 rounded outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
             value={email}
             required
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label>Phone Number</label>
+          <label className="text-base">Phone Number</label>
           <input
             type="tel"
-            className="auth-input"
+            className="border py-2 px-3 rounded outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
             value={phoneNumber}
             required
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
-          <label>Password</label>
+          <label className="text-base">Password</label>
           <input
             type="password"
-            className="auth-input"
+            className="border py-2 px-3 rounded outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
             value={password}
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Submit</button>
-          <div>
-            <h2>
-              <a href="/auth/login">Already have an account? Log in</a>
+          <button
+            type="submit"
+            className="bg-[#0A2647] hover:bg-[#2C74B3] text-white font-bold w-full py-2 px-4 rounded-2xl mt-4 duration-100 transform hover:scale-105"
+          >
+            Submit
+          </button>
+          <div className="text-center">
+            <h2 className="text-lg">
+              <a href="/auth/login" className="text-[#2C74B3] hover:underline">
+                Already have an account? Log in
+              </a>
             </h2>
           </div>
         </form>

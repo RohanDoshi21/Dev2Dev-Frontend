@@ -80,7 +80,7 @@ const UserProfile = () => {
           alt="User Avatar"
         />
         <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">{`${user.first_name} ${user.last_name}`}</div>
+          <div className="font-bold text-xl mb-2 text-[#0A2647]">{`${user.first_name} ${user.last_name}`}</div>
           <p className="text-gray-700 text-base mb-2">Email: {user.email}</p>
           <p className="text-gray-700 text-base mb-2">
             Phone Number: {user.phone_number}

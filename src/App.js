@@ -24,7 +24,7 @@ function App() {
   return (
     <Router>
       <div
-        className="App"
+        className="App font-myfont"
         style={{
           backgroundImage: `url(${bgimage2})`,
           height: "100vh",

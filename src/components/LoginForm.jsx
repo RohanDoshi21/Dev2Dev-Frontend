@@ -55,35 +55,44 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-center align-center h-screen items-center  bg-cover">
-        <div className="justify-center items-center rounded-md gap-y-8 flex-col w-2/3 ">
-          <h1>LOGIN</h1>
-          <form onSubmit={handleSubmit} className="">
-            <label>Email</label>
-            <input
-              type="email"
-              className=""
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label>Password</label>
-            <input
-              type="password"
-              className=""
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button type="submit">Submit</button>
-            <div>
-              <h2>
-                <Link to="/auth/signup"> Don't have an account? Sign up</Link>
-              </h2>
-            </div>
-          </form>
-        </div>
+    <div className="flex justify-center mt-36 align-middle items-center bg-cover">
+      <div className="flex justify-center items-center flex-col rounded-xl gap-y-2 p-8 border-2 shadow-xl px-10">
+        <h1 className="text-4xl font-semibold text-[#0A2647]">Login</h1>
+        <hr className="w-full border-[#0A2647] border-[0.12rem] mb-4" />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <label className="text-base">Email</label>
+          <input
+            type="email"
+            className="border py-2 px-3 rounded outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label className="text-base">Password</label>
+          <input
+            type="password"
+            className="border py-2 px-3 rounded outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-[#0A2647] hover:bg-[#2C74B3] text-white font-bold w-full py-2 px-4 rounded-2xl mt-4 duration-100 transform hover:scale-105"
+          >
+            Submit
+          </button>
+          <div className="text-center">
+            <h2 className="text-lg">
+              <Link
+                to="/auth/signup"
+                className="text-[#2C74B3] hover:underline"
+              >
+                Don't have an account? Sign up
+              </Link>
+            </h2>
+          </div>
+        </form>
       </div>
     </div>
   );
