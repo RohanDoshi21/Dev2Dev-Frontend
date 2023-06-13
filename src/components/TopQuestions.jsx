@@ -297,7 +297,18 @@ const TopQuestions = () => {
                     </span>
                   </h2>
                 </div>
-                <div className="text-gray-700 mb-2">{question.description}</div>
+                <div className="text-gray-700 mb-2">
+                  <div
+                    className="overflow-hidden"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                    }}
+                  >
+                    {question.description}
+                  </div>
+                </div>
               </div>
               <div className="text-gray-600 inline-flex w-full items-start justify-start text-[0.85rem] space-x-2">
                 {question.tag != null &&

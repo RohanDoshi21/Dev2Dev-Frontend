@@ -4,8 +4,8 @@ import { FaTrash } from "react-icons/fa";
 import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authCheck } from "../AuthChecker";
-import arrrowDown from "../assets/down-arrow.png";
-import arrrowUp from "../assets/up-arrow.png";
+import arrowDown from "../assets/down-arrow.png";
+import arrowUp from "../assets/up-arrow.png";
 import { authCheckModerator } from "../AuthChecker";
 import {
   answerUrl,
@@ -185,7 +185,7 @@ const DisplayQuestionAndAnswers = (props) => {
             aria-label="Upvote"
             onClick={() => addVote(question.id, 1, "question")}
           >
-            <img src={arrrowUp} className="h-5 w-5 mx-2" alt="up arrow"></img>
+            <img src={arrowUp} className="h-5 w-5 mx-2" alt="up arrow"></img>
 
             <span className="text-xs font-medium">{question.upvotes}</span>
           </button>
@@ -194,7 +194,7 @@ const DisplayQuestionAndAnswers = (props) => {
             aria-label="Downvote"
             onClick={() => addVote(question.id, -1, "question")}
           >
-            <img src={arrrowDown} className="h-5 w-5 mx-2" alt="up arrow"></img>
+            <img src={arrowDown} className="h-5 w-5 mx-2" alt="up arrow"></img>
             <span className="text-xs font-medium">{question.downvotes}</span>
           </button>
         </div>
@@ -214,7 +214,9 @@ const DisplayQuestionAndAnswers = (props) => {
                 </span>
               </h2>
             </div>
-            <div className="text-gray-700 mb-2">{question.description}</div>
+            <div className="text-gray-700 mb-2 whitespace-pre-wrap">
+              {question.description}
+            </div>
           </div>
           <div className="text-gray-600 inline-flex w-full items-start justify-start text-[0.85rem] space-x-2">
             {question.tag != null &&
@@ -257,6 +259,63 @@ const DisplayQuestionAndAnswers = (props) => {
               )}
             </div>
           )}
+
+          {/* Display question components */}
+          {question.questionComponents &&
+            Array.isArray(question.questionComponents) && (
+              <div className="flex overflow-x-auto">
+                {question.questionComponents.map((component) => {
+                  if (component.component === "TEXT") {
+                    return (
+                      <div
+                        key={component.id}
+                        className="text-gray-600 mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
+                      >
+                        {component.content}
+                      </div>
+                    );
+                  } else if (component.component === "VIDEO") {
+                    return (
+                      <div
+                        key={component.id}
+                        className="text-gray-600 mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
+                      >
+                        <iframe
+                          width="560"
+                          height="315"
+                          src={component.content}
+                          title="Video Component"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        ></iframe>
+                      </div>
+                    );
+                  } else if (component.component === "IMAGE") {
+                    return (
+                      <div
+                        key={component.id}
+                        className="flex items-center mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
+                      >
+                        <a
+                          href={component.content}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src={component.content}
+                            alt="Image Component"
+                            className="max-h-80 max-w-80 rounded-lg"
+                          />
+                        </a>
+                      </div>
+                    );
+                  } else {
+                    return null; // Handle other component types if needed
+                  }
+                })}
+              </div>
+            )}
         </div>
       </div>
 
@@ -277,7 +336,7 @@ const DisplayQuestionAndAnswers = (props) => {
               aria-label="Upvote"
               onClick={() => addVote(answer.id, 1, "answer")}
             >
-              <img src={arrrowUp} className="h-5 w-5 mx-2" alt="up arrow"></img>
+              <img src={arrowUp} className="h-5 w-5 mx-2" alt="up arrow"></img>
 
               <span className="text-xs font-medium">{answer.upvotes}</span>
             </button>
@@ -287,7 +346,7 @@ const DisplayQuestionAndAnswers = (props) => {
               onClick={() => addVote(answer.id, -1, "answer")}
             >
               <img
-                src={arrrowDown}
+                src={arrowDown}
                 className="h-5 w-5 mx-2"
                 alt="up arrow"
               ></img>
@@ -296,7 +355,9 @@ const DisplayQuestionAndAnswers = (props) => {
           </div>
           <div className="flex flex-col gap-3 mb-2">
             <div className="items-start justify-start text-start">
-              <div className="text-gray-700 mb-2">{answer.description}</div>
+              <div className="text-gray-700 mb-2 whitespace-pre-wrap">
+                {answer.description}
+              </div>
             </div>
             <div className="text-gray-600 text-end items-end justify-end text-xs absolute bottom-3 right-5">
               {answer.owner.email} • Posted on {formatedDate(answer.created_at)}
