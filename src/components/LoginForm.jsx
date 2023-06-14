@@ -36,7 +36,7 @@ const LoginForm = () => {
           "username",
           responseData["data"]["user"]["first_name"]
         );
-        localStorage.setItem("userID", responseData["data"]["user"]["id"]);
+        localStorage.setItem("userID", responseData["data"]["user"]["id"].toString());
         localStorage.setItem("role", responseData["data"]["user"]["role"]);
         localStorage.setItem("dpUrl", responseData["data"]["user"]["dpUrl"]);
 

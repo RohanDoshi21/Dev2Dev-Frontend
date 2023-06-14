@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { getTagListUrl } from "../constants/urls";
-import arrrowDown from "../assets/down-arrow.png";
-import arrrowUp from "../assets/up-arrow.png";
-import { Link, useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {getTagListUrl} from "../constants/urls";
+import arrowDown from "../assets/down-arrow.png";
+import arrowUp from "../assets/up-arrow.png";
+import {Link, useParams} from "react-router-dom";
 
 const fetchTagList = async () => {
   let response = await fetch(getTagListUrl);
@@ -26,10 +26,9 @@ const Tags = () => {
 
   function formattedDate(createdAt) {
     const date = new Date(createdAt);
-    const formattedDate = `${date.getDate()} ${date.toLocaleString("default", {
+    return `${date.getDate()} ${date.toLocaleString("default", {
       month: "short",
     })} ${date.getFullYear()}`;
-    return formattedDate;
   }
 
   useEffect(() => {
@@ -73,7 +72,7 @@ const Tags = () => {
                 aria-label="Upvote"
               >
                 <img
-                  src={arrrowUp}
+                  src={arrowUp}
                   className="h-5 w-5 mx-2"
                   alt="up arrow"
                 ></img>
@@ -85,7 +84,7 @@ const Tags = () => {
                 aria-label="Downvote"
               >
                 <img
-                  src={arrrowDown}
+                  src={arrowDown}
                   className="h-5 w-5 mx-2"
                   alt="up arrow"
                 ></img>

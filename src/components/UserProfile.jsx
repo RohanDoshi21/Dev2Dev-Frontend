@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { getUserUrl } from "../constants/urls";
-import { Link } from "react-router-dom";
+import Axios from "axios";
+import {Link, useParams} from "react-router-dom";
+import {getUserUrl, makeModeratorUrl} from "../constants/urls";
 import arrowDown from "../assets/down-arrow.png";
 import arrowUp from "../assets/up-arrow.png";
-import { authCheckModerator } from "../AuthChecker";
-import Axios from "axios";
-import { makeModeratorUrl } from "../constants/urls";
-import { toast } from "react-toastify";
+import {authCheckModerator} from "../AuthChecker";
+import {toast} from "react-toastify";
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -28,10 +26,9 @@ const UserProfile = () => {
 
   function formattedDate(createdAt) {
     const date = new Date(createdAt);
-    const formattedDate = `${date.getDate()} ${date.toLocaleString("default", {
+    return `${date.getDate()} ${date.toLocaleString("default", {
       month: "short",
     })} ${date.getFullYear()}`;
-    return formattedDate;
   }
 
   function makeModeratorUser() {
@@ -51,7 +48,7 @@ const UserProfile = () => {
       },
       config
     )
-      .then((response) => {
+      .then((_) => {
         fetchUser().then((data) => {
           setUser(data);
           setQuestions(data.questions);

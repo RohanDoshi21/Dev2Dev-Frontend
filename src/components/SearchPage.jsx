@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import arrrowDown from "../assets/down-arrow.png";
-import arrrowUp from "../assets/up-arrow.png";
-import { searchURL } from "../constants/urls";
+import {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
+import arrowDown from "../assets/down-arrow.png";
+import arrowUp from "../assets/up-arrow.png";
+import {searchURL} from "../constants/urls";
 import Header from "./Header";
 
 const SearchPage = () => {
@@ -14,14 +14,13 @@ const SearchPage = () => {
       .then((response) => response.json())
       .then((data) => setQuestions(data["data"]["questions"]))
       .catch((error) => console.error(error));
-  }, [questions]);
+  }, [query, questions]);
 
-  function formatedDate(createdAt) {
+  function formattedDate(createdAt) {
     const date = new Date(createdAt);
-    const formattedDate = `${date.getDate()} ${date.toLocaleString("default", {
+    return `${date.getDate()} ${date.toLocaleString("default", {
       month: "short",
     })} ${date.getFullYear()}`;
-    return formattedDate;
   }
 
   return (
@@ -46,7 +45,7 @@ const SearchPage = () => {
                   aria-label="Upvote"
                 >
                   <img
-                    src={arrrowUp}
+                    src={arrowUp}
                     className="h-5 w-5 mx-2"
                     alt="up arrow"
                   ></img>
@@ -60,7 +59,7 @@ const SearchPage = () => {
                   aria-label="Downvote"
                 >
                   <img
-                    src={arrrowDown}
+                    src={arrowDown}
                     className="h-5 w-5 mx-2"
                     alt="up arrow"
                   ></img>
@@ -91,7 +90,7 @@ const SearchPage = () => {
                 </div>
                 <div className="text-gray-600 text-end items-end justify-end text-xs absolute bottom-3 right-5">
                   {question.email} • Posted on{" "}
-                  {formatedDate(question.created_at)}
+                  {formattedDate(question.created_at)}
                 </div>
               </div>
             </div>

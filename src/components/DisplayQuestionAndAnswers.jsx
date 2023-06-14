@@ -1,19 +1,18 @@
 import Axios from "axios";
-import React, { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
-import { useHistory, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { authCheck } from "../AuthChecker";
+import React, {useEffect, useState} from "react";
+import {FaTrash} from "react-icons/fa";
+import {useHistory, useParams} from "react-router-dom";
+import {toast} from "react-toastify";
+import {authCheck, authCheckModerator} from "../AuthChecker";
 import arrowDown from "../assets/down-arrow.png";
 import arrowUp from "../assets/up-arrow.png";
-import { authCheckModerator } from "../AuthChecker";
 import {
   answerUrl,
+  changeStatusUrl,
   deleteMyQuestion,
   getQuestionsUrl,
   voteAnswerUrl,
   voteQuestionUrl,
-  changeStatusUrl,
 } from "../constants/urls";
 
 const fetchQuestionById = async (id) => {
@@ -30,7 +29,7 @@ const fetchAnswersByQuestionId = async (id) => {
   return data["data"]["answers"];
 };
 
-const DisplayQuestionAndAnswers = (props) => {
+const DisplayQuestionAndAnswers = () => {
   const { id } = useParams();
 
   const [question, setQuestion] = useState({});
@@ -47,12 +46,11 @@ const DisplayQuestionAndAnswers = (props) => {
 
   const history = useHistory();
 
-  function formatedDate(createdAt) {
+  function formattedDate(createdAt) {
     const date = new Date(createdAt);
-    const formattedDate = `${date.getDate()} ${date.toLocaleString("default", {
+    return `${date.getDate()} ${date.toLocaleString("default", {
       month: "short",
     })} ${date.getFullYear()}`;
-    return formattedDate;
   }
 
   const [isModerator, setIsModerator] = useState(false);
@@ -61,11 +59,11 @@ const DisplayQuestionAndAnswers = (props) => {
     fetchAnswersByQuestionId(id).then((data) => setAnswers(data));
     fetchQuestionById(id).then((data) => {
       setQuestion(data);
-      updateIsMyQuestion(data["ownerId"] == userID);
+      updateIsMyQuestion(data["ownerId"] === userID);
       setEmail(data["owner"]["email"]);
     });
     setIsModerator(authCheckModerator());
-  }, []);
+  }, [id, userID]);
 
   const addAnswer = async () => {
     if (!authCheck()) {
@@ -90,10 +88,10 @@ const DisplayQuestionAndAnswers = (props) => {
       },
       config
     )
-      .then((response) => {
+      .then((_) => {
         setAddAnswerVariable("");
         fetchAnswersByQuestionId(id).then((data) => setAnswers(data));
-        toast.success("Answer Added Succesfully");
+        toast.success("Answer Added Successfully");
       })
       .catch((error) => {
         toast.error(error.response.data.error);
@@ -115,7 +113,7 @@ const DisplayQuestionAndAnswers = (props) => {
       },
     };
 
-    var typeQ = type === "question" ? voteQuestionUrl : voteAnswerUrl;
+    const typeQ = type === "question" ? voteQuestionUrl : voteAnswerUrl;
 
     Axios.put(
       typeQ + id,
@@ -124,13 +122,13 @@ const DisplayQuestionAndAnswers = (props) => {
       },
       config
     )
-      .then((response) => {
+      .then((_) => {
         if (type === "question") {
           fetchQuestionById(id).then((data) => setQuestion(data));
         } else {
         }
         fetchAnswersByQuestionId(id).then((data) => setAnswers(data));
-        toast.success("Vote Added Succesfully");
+        toast.success("Vote Added Successfully");
       })
       .catch((error) => {
         toast.error(error.response.data.error);
@@ -167,7 +165,7 @@ const DisplayQuestionAndAnswers = (props) => {
       },
       config
     )
-      .then((response) => {
+      .then((_) => {
         fetchQuestionById(id).then((data) => setQuestion(data));
         toast.success("Status Changed Successfully");
       })
@@ -231,7 +229,7 @@ const DisplayQuestionAndAnswers = (props) => {
               ))}
           </div>
           <div className="text-gray-600 text-end items-end justify-end text-xs absolute bottom-3 right-5">
-            {email} • Posted on {formatedDate(question.created_at)}
+            {email} • Posted on {formattedDate(question.created_at)}
           </div>
 
           {isMyQuestion && (
@@ -285,7 +283,6 @@ const DisplayQuestionAndAnswers = (props) => {
                           height="315"
                           src={component.content}
                           title="Video Component"
-                          frameBorder="0"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         ></iframe>
@@ -304,7 +301,7 @@ const DisplayQuestionAndAnswers = (props) => {
                         >
                           <img
                             src={component.content}
-                            alt="Image Component"
+                            alt=""
                             className="max-h-80 max-w-80 rounded-lg"
                           />
                         </a>
@@ -327,7 +324,7 @@ const DisplayQuestionAndAnswers = (props) => {
         </div>
       </div>
 
-      {/* Map through Answers and display them Answers has description upvote downvote created_at and name email*/}
+      {/* Map through Answers and display them Answers has description upvote down vote created_at and name email*/}
       {answers.map((answer) => (
         <div className="border-gray-200 shadow-md border flex flex-row gap-8 rounded-lg p-4 mb-3 relative w-full">
           <div className="flex flex-col items-end  gap-4 justify-center  mr-2  w-[1rem]">
@@ -360,7 +357,7 @@ const DisplayQuestionAndAnswers = (props) => {
               </div>
             </div>
             <div className="text-gray-600 text-end items-end justify-end text-xs absolute bottom-3 right-5">
-              {answer.owner.email} • Posted on {formatedDate(answer.created_at)}
+              {answer.owner.email} • Posted on {formattedDate(answer.created_at)}
             </div>
           </div>
         </div>

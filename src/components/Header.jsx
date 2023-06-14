@@ -18,7 +18,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      logOut();
+      await logOut();
       setAuth(false);
       toast.success("Logged out!");
       localStorage.removeItem("userID");

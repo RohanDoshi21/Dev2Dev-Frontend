@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getUserUrl } from "../constants/urls";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
+import {getUserUrl} from "../constants/urls";
 import axios from "axios";
 
 const UserCard = ({ user }) => {
@@ -29,8 +29,7 @@ const UserCard = ({ user }) => {
 const UserListPage = () => {
   const fetchUsers = async () => {
     const response = await axios.get(getUserUrl);
-    const data = response.data.data.users;
-    return data;
+    return response.data.data.users;
   };
 
   useEffect(() => {

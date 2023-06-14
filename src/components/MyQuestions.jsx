@@ -1,12 +1,11 @@
 import Axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 import arrowDown from "../assets/down-arrow.png";
 import arrowUp from "../assets/up-arrow.png";
-import { getMyQuestionsUrl } from "../constants/urls";
-import { getQuestionsUrl } from "../constants/urls";
-import { toast } from "react-toastify";
-import { authCheck } from "../AuthChecker";
+import {getMyQuestionsUrl, getQuestionsUrl} from "../constants/urls";
+import {toast} from "react-toastify";
+import {authCheck} from "../AuthChecker";
 
 const fetchMyQuestions = async () => {
   const status = localStorage.getItem("jwt_authorization");
@@ -34,10 +33,9 @@ const MyQuestions = () => {
 
   function formattedDate(createdAt) {
     const date = new Date(createdAt);
-    const formattedDate = `${date.getDate()} ${date.toLocaleString("default", {
+    return `${date.getDate()} ${date.toLocaleString("default", {
       month: "short",
     })} ${date.getFullYear()}`;
-    return formattedDate;
   }
 
   const [postQuestion, setPostQuestion] = useState(false);
@@ -75,7 +73,7 @@ const MyQuestions = () => {
         tag: tagList,
       },
       config
-    ).then((response) => {
+    ).then((_) => {
       toast.success("Question posted successfully");
       fetchMyQuestions().then((data) => {
         setQuestions(data["questions"]);

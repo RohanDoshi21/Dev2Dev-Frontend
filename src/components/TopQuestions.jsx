@@ -1,17 +1,17 @@
 import Axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 import Select from "react-select";
-import { toast } from "react-toastify";
-import { authCheck } from "../AuthChecker";
+import {toast} from "react-toastify";
+import {authCheck} from "../AuthChecker";
 import arrowDown from "../assets/down-arrow.png";
 import arrowUp from "../assets/up-arrow.png";
-import { getQuestionsUrl } from "../constants/urls";
+import {getQuestionsUrl} from "../constants/urls";
 import QuestionPageSwitcher from "./QuestionPageSwitcher";
 
 const fetchTopQuestions = async (option, page) => {
   let response = await fetch(
-    getQuestionsUrl + `?page=${page}&` + `sort=${option}`
+    `${getQuestionsUrl}?page=${page}&sort=${option}`
   );
   const data = await response.json();
   return data["data"];
@@ -70,12 +70,11 @@ const TopQuestions = () => {
     });
   };
 
-  function formatedDate(createdAt) {
+  function formattedDate(createdAt) {
     const date = new Date(createdAt);
-    const formattedDate = `${date.getDate()} ${date.toLocaleString("default", {
+    return `${date.getDate()} ${date.toLocaleString("default", {
       month: "short",
     })} ${date.getFullYear()}`;
-    return formattedDate;
   }
 
   function handleOnClick() {
@@ -325,7 +324,7 @@ const TopQuestions = () => {
 
               <div className="text-gray-600 text-end items-end justify-end text-xs absolute bottom-3 right-5">
                 {question.owner.email} • Posted on{" "}
-                {formatedDate(question.created_at)}
+                {formattedDate(question.created_at)}
               </div>
             </div>
           </div>
