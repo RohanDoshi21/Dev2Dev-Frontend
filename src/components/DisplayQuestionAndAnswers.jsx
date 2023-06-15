@@ -14,6 +14,8 @@ import {
     voteAnswerUrl,
     voteQuestionUrl,
 } from "../constants/urls";
+import formattedDate from "../utils/dateFormattor";
+import formatCode from "../utils/codeFormattor";
 
 const fetchQuestionById = async (id) => {
     let response = await fetch(getQuestionsUrl + "/" + id);
@@ -45,13 +47,6 @@ const DisplayQuestionAndAnswers = () => {
     const [email, setEmail] = useState("");
 
     const history = useHistory();
-
-    function formattedDate(createdAt) {
-        const date = new Date(createdAt);
-        return `${date.getDate()} ${date.toLocaleString("default", {
-            month: "short",
-        })} ${date.getFullYear()}`;
-    }
 
     const [isModerator, setIsModerator] = useState(false);
 
@@ -213,7 +208,10 @@ const DisplayQuestionAndAnswers = () => {
                             </h2>
                         </div>
                         <div className="text-gray-700 mb-2 whitespace-pre-wrap">
-                            {question.description}
+                            {formatCode(question.description)}
+                            <pre>
+        <code dangerouslySetInnerHTML={{ __html: formatCode(question.description) }} />
+      </pre>
                         </div>
                     </div>
                     <div
