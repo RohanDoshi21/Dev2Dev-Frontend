@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {authCheck} from "../AuthChecker";
+import {authCheck} from "../../AuthChecker";
 import {toast} from "react-toastify";
 import Axios from "axios";
-import {getQuestionsUrl} from "../constants/urls";
+import {getQuestionsUrl} from "../../constants/urls";
+import UploadFiles from "./UploadFiles";
 
 const CreateQuestion = () => {
     const [postQuestion, setPostQuestion] = useState(false);
@@ -11,6 +12,8 @@ const CreateQuestion = () => {
     const [description, setDescription] = useState("");
     const [tagList, setTagList] = useState([]);
     const [inputValue, setInputValue] = useState("");
+
+    const [downloadUrls, setDownloadUrls] = useState([]);
 
     const handleAddTag = () => {
         if (inputValue === "") return;
@@ -50,19 +53,40 @@ const CreateQuestion = () => {
             },
         };
 
-        Axios.post(
-            getQuestionsUrl,
-            {
-                title: title,
-                description: description,
-                tag: tagList,
-            },
-            config
-        ).then((_) => {
-            toast.success("Question posted successfully");
+        try {
+            const response = await Axios.post(
+                getQuestionsUrl,
+                {
+                    title: title,
+                    description: description,
+                    tag: tagList,
+                },
+                config
+            );
+
+            const questionId = response.data.data.question.id;
+
+            downloadUrls.forEach((url) => {
+                Axios.post(
+                    getQuestionsUrl + '/add_component',
+                    {
+                        questionId,
+                        componentType: "IMAGE",
+                        content: url
+                    },
+                    config
+                ).then(() => {
+                    console.log("Image Added");
+                });
+            })
+
+            toast.success("Question created successfully");
             setPostQuestion(false);
-        });
+        } catch (e) {
+            toast.error("Cannot create a question");
+        }
     }
+
 
     return (
         <div className="justify-center items-center bg-cover w-2/3 flex flex-col">
@@ -172,6 +196,7 @@ const CreateQuestion = () => {
                                         +
                                     </button>
                                 </div>
+                                <UploadFiles downloadUrls={downloadUrls} setDownloadUrls={setDownloadUrls}/>
                             </div>
                             <button
                                 onClick={postQuestionBackend}

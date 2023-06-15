@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import arrowDown from "../assets/down-arrow.png";
 import arrowUp from "../assets/up-arrow.png";
 import {getMyQuestionsUrl} from "../constants/urls";
-import CreateQuestion from "./CreateQuestion";
+import CreateQuestion from "./sub/CreateQuestion";
 import formattedDate from "../utils/dateFormattor";
 
 const fetchMyQuestions = async () => {

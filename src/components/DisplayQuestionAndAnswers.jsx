@@ -7,12 +7,12 @@ import {authCheck, authCheckModerator} from "../AuthChecker";
 import arrowDown from "../assets/down-arrow.png";
 import arrowUp from "../assets/up-arrow.png";
 import {
-  answerUrl,
-  changeStatusUrl,
-  deleteMyQuestion,
-  getQuestionsUrl,
-  voteAnswerUrl,
-  voteQuestionUrl,
+    answerUrl,
+    changeStatusUrl,
+    deleteMyQuestion,
+    getQuestionsUrl,
+    voteAnswerUrl,
+    voteQuestionUrl,
 } from "../constants/urls";
 
 const fetchQuestionById = async (id) => {

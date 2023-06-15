@@ -6,7 +6,7 @@ import arrowDown from "../assets/down-arrow.png";
 import arrowUp from "../assets/up-arrow.png";
 import {getQuestionsUrl} from "../constants/urls";
 import QuestionPageSwitcher from "./QuestionPageSwitcher";
-import CreateQuestion from "./CreateQuestion";
+import CreateQuestion from "./sub/CreateQuestion";
 import formattedDate from "../utils/dateFormattor";
 
 const fetchTopQuestions = async (option, page) => {
