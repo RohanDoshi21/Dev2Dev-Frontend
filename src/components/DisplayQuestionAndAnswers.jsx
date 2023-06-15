@@ -15,7 +15,7 @@ import {
     voteQuestionUrl,
 } from "../constants/urls";
 import formattedDate from "../utils/dateFormattor";
-import formatCode from "../utils/codeFormattor";
+import CodeHighlight from "./sub/CodeHighlighter";
 
 const fetchQuestionById = async (id) => {
     let response = await fetch(getQuestionsUrl + "/" + id);
@@ -178,17 +178,29 @@ const DisplayQuestionAndAnswers = () => {
                         aria-label="Upvote"
                         onClick={() => addVote(question.id, 1, "question")}
                     >
-                        <img src={arrowUp} className="h-5 w-5 mx-2" alt="up arrow"></img>
+                        <img
+                            src={arrowUp}
+                            className="h-5 w-5 mx-2"
+                            alt="up arrow"
+                        ></img>
 
-                        <span className="text-xs font-medium">{question.upvotes}</span>
+                        <span className="text-xs font-medium">
+							{question.upvotes}
+						</span>
                     </button>
                     <button
                         className="text-gray-600 hover:text-gray-800 flex flex-row  focus:outline-none focus:text-gray-800"
                         aria-label="Downvote"
                         onClick={() => addVote(question.id, -1, "question")}
                     >
-                        <img src={arrowDown} className="h-5 w-5 mx-2" alt="up arrow"></img>
-                        <span className="text-xs font-medium">{question.downvotes}</span>
+                        <img
+                            src={arrowDown}
+                            className="h-5 w-5 mx-2"
+                            alt="up arrow"
+                        ></img>
+                        <span className="text-xs font-medium">
+							{question.downvotes}
+						</span>
                     </button>
                 </div>
                 <div className="flex flex-col gap-3 mb-2  w-full">
@@ -203,15 +215,12 @@ const DisplayQuestionAndAnswers = () => {
                                             : "bg-[#fb919d] text-[#bc3646]"
                                     } pb-1  mx-2 rounded-full px-2 py-1 text-xs font-medium`}
                                 >
-                  {question.status}
-                </span>
+									{question.status}
+								</span>
                             </h2>
                         </div>
                         <div className="text-gray-700 mb-2 whitespace-pre-wrap">
-                            {formatCode(question.description)}
-                            <pre>
-        <code dangerouslySetInnerHTML={{ __html: formatCode(question.description) }} />
-      </pre>
+                            <CodeHighlight description={question.description}/>
                         </div>
                     </div>
                     <div
@@ -242,14 +251,21 @@ const DisplayQuestionAndAnswers = () => {
                             {question.status === "OPEN" ? (
                                 <button
                                     className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg"
-                                    onClick={() => handleStatusChange(question.id, "CLOSED")}
+                                    onClick={() =>
+                                        handleStatusChange(
+                                            question.id,
+                                            "CLOSED"
+                                        )
+                                    }
                                 >
                                     Close
                                 </button>
                             ) : (
                                 <button
                                     className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg"
-                                    onClick={() => handleStatusChange(question.id, "OPEN")}
+                                    onClick={() =>
+                                        handleStatusChange(question.id, "OPEN")
+                                    }
                                 >
                                     Open
                                 </button>
@@ -261,55 +277,63 @@ const DisplayQuestionAndAnswers = () => {
                     {question.questionComponents &&
                         Array.isArray(question.questionComponents) && (
                             <div className="flex overflow-x-auto">
-                                {question.questionComponents.map((component) => {
-                                    if (component.component === "TEXT") {
-                                        return (
-                                            <div
-                                                key={component.id}
-                                                className="text-gray-600 mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
-                                            >
-                                                {component.content}
-                                            </div>
-                                        );
-                                    } else if (component.component === "VIDEO") {
-                                        return (
-                                            <div
-                                                key={component.id}
-                                                className="text-gray-600 mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
-                                            >
-                                                <iframe
-                                                    width="560"
-                                                    height="315"
-                                                    src={component.content}
-                                                    title="Video Component"
-                                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowFullScreen
-                                                ></iframe>
-                                            </div>
-                                        );
-                                    } else if (component.component === "IMAGE") {
-                                        return (
-                                            <div
-                                                key={component.id}
-                                                className="flex items-center mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
-                                            >
-                                                <a
-                                                    href={component.content}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
+                                {question.questionComponents.map(
+                                    (component) => {
+                                        if (component.component === "TEXT") {
+                                            return (
+                                                <div
+                                                    key={component.id}
+                                                    className="text-gray-600 mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
                                                 >
-                                                    <img
+                                                    {component.content}
+                                                </div>
+                                            );
+                                        } else if (
+                                            component.component === "VIDEO"
+                                        ) {
+                                            return (
+                                                <div
+                                                    key={component.id}
+                                                    className="text-gray-600 mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
+                                                >
+                                                    <iframe
+                                                        width="560"
+                                                        height="315"
                                                         src={component.content}
-                                                        alt=""
-                                                        className="max-h-80 max-w-80 rounded-lg"
-                                                    />
-                                                </a>
-                                            </div>
-                                        );
-                                    } else {
-                                        return null; // Handle other component types if needed
+                                                        title="Video Component"
+                                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                </div>
+                                            );
+                                        } else if (
+                                            component.component === "IMAGE"
+                                        ) {
+                                            return (
+                                                <div
+                                                    key={component.id}
+                                                    className="flex items-center mb-2 mr-2 bg-white rounded-lg shadow-md border p-2"
+                                                >
+                                                    <a
+                                                        href={component.content}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        <img
+                                                            src={
+                                                                component.content
+                                                            }
+                                                            alt=""
+                                                            className="max-h-80 max-w-80 rounded-lg"
+                                                        />
+                                                    </a>
+                                                </div>
+                                            );
+                                        } else {
+                                            return null; // Handle other component types if needed
+                                        }
                                     }
-                                })}
+                                )}
                             </div>
                         )}
                 </div>
@@ -333,9 +357,15 @@ const DisplayQuestionAndAnswers = () => {
                             aria-label="Upvote"
                             onClick={() => addVote(answer.id, 1, "answer")}
                         >
-                            <img src={arrowUp} className="h-5 w-5 mx-2" alt="up arrow"></img>
+                            <img
+                                src={arrowUp}
+                                className="h-5 w-5 mx-2"
+                                alt="up arrow"
+                            ></img>
 
-                            <span className="text-xs font-medium">{answer.upvotes}</span>
+                            <span className="text-xs font-medium">
+								{answer.upvotes}
+							</span>
                         </button>
                         <button
                             className="text-gray-600 hover:text-gray-800 flex flex-row  focus:outline-none focus:text-gray-800"
@@ -347,13 +377,17 @@ const DisplayQuestionAndAnswers = () => {
                                 className="h-5 w-5 mx-2"
                                 alt="up arrow"
                             ></img>
-                            <span className="text-xs font-medium">{answer.downvotes}</span>
+                            <span className="text-xs font-medium">
+								{answer.downvotes}
+							</span>
                         </button>
                     </div>
                     <div className="flex flex-col gap-3 mb-2">
                         <div className="items-start justify-start text-start">
                             <div className="text-gray-700 mb-2 whitespace-pre-wrap">
-                                {answer.description}
+                                <CodeHighlight
+                                    description={answer.description}
+                                />
                             </div>
                         </div>
                         <div className="text-gray-600 text-end items-end justify-end text-xs absolute bottom-3 right-5">
@@ -374,13 +408,15 @@ const DisplayQuestionAndAnswers = () => {
                     </div>
                     <div className="flex flex-col">
                         <div className="text-sm text-gray-500">
-              <textarea
-                  className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                  rows="4"
-                  placeholder="Enter your answer"
-                  value={addAnswerVariable}
-                  onChange={(e) => setAddAnswerVariable(e.target.value)}
-              />
+							<textarea
+                                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                                rows="4"
+                                placeholder="Enter your answer"
+                                value={addAnswerVariable}
+                                onChange={(e) =>
+                                    setAddAnswerVariable(e.target.value)
+                                }
+                            />
                         </div>
 
                         <div className="flex flex-row my-2">

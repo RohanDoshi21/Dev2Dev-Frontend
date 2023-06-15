@@ -22,5 +22,4 @@ const formatCode = (description) => {
     });
 };
 
-
 export default formatCode;
