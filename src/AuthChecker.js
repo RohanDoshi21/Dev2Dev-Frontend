@@ -2,40 +2,40 @@ import "react-toastify/dist/ReactToastify.css";
 import jwtDecode from "jwt-decode";
 
 const authCheck = () => {
-    const token = localStorage.getItem("jwt_authorization");
+  const token = localStorage.getItem("jwt_authorization");
 
-    return token !== null;
+  return token !== null;
 };
 
 const authCheckModerator = () => {
-    const token = localStorage.getItem("jwt_authorization");
-    if (token === null) {
-        return false;
-    }
+  const token = localStorage.getItem("jwt_authorization");
+  if (token === null) {
+    return false;
+  }
 
-    const decodedToken = jwtDecode(token);
-    const user = decodedToken.user;
-    const role = user.role;
+  const decodedToken = jwtDecode(token);
+  const user = decodedToken.user;
+  const role = user.role;
 
-    console.log(role);
+  console.log(role);
 
-    return role === "MODERATOR";
+  return role === "MODERATOR";
 };
 
 const logOut = async () => {
-    try {
-        localStorage.removeItem("jwt_authorization");
-        return {message: "Successfully logged out"};
-    } catch (error) {
-        return {error: "Something went wrong"};
-    }
+  try {
+    localStorage.removeItem("jwt_authorization");
+    return { message: "Successfully logged out" };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
 };
 
 const config = {
-    headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt_authorization"),
-    },
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + localStorage.getItem("jwt_authorization"),
+  },
 };
 
-export {authCheck, logOut, config, authCheckModerator};
+export { authCheck, logOut, config, authCheckModerator };
